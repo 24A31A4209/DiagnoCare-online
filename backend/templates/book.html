@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Appointment - DiagnoCare</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f3f6; /* light gray background */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;  
+      max-width: 680px;
+      margin: 50px auto;
+      background: linear-gradient(145deg, #fffdf9, #f1f3f6); /* soft cream → light gray */
+      padding: 30px 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s forwards;
+      position: relative;
+    }
+
+    @keyframes fadeIn {
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    /* Back Button */
+    .back-btn {
+      background: transparent;
+      color: #008080; /* teal */
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 15px;
+      transition: all 0.3s;
+    }
+
+    .back-btn:hover {
+      color: #20c997; /* lighter teal on hover */
+      transform: translateX(-3px);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333; /* dark heading */
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .input-wrapper {
+      position: relative;
+      margin-top: 5px;
+    }
+
+    .input-wrapper i {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      color: #008080; /* teal icons */
+      font-size: 16px;
+    }
+
+    input, select {
+      width: 96%; /* slightly smaller than container to fit */
+      padding: 10px 10px 10px 35px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: all 0.3s;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus {
+      border-color: #008080;
+      box-shadow: 0 0 8px rgba(0,128,128,0.3);
+      outline: none;
+    }
+
+    button.submit-btn {
+      width: 96%;
+      padding: 12px;
+      margin-top: 25px;
+      background: linear-gradient(45deg, #008080, #20c997); /* teal → turquoise */
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s;
+      box-sizing: border-box;
+    }
+
+    button.submit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0,128,128,0.4);
+      background: linear-gradient(45deg, #006666, #28d1a0);
+    }
+
+    .info {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .info.show {
+      opacity: 1;
+    }
+
+    /* Reminder inputs */
+    .reminder-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .reminder-wrapper input[type="number"] {
+      width: 60px;
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    /* Responsive tweaks */
+    @media(max-width: 550px){
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+      input, select, button.submit-btn {
+        width: 100%; /* full width on mobile */
+      }
+      .reminder-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Back Button -->
+  <button type="button" class="back-btn" id="backBtn">
+    <i class="fa-solid fa-arrow-left"></i> Back
+  </button>
+
+  <h2>Book Appointment</h2>
+
+  <form id="appointmentForm">
+
+    <!-- Hidden IDs passed from Flask -->
+    <input type="hidden" id="testId" value="{{ request.args.get('test_id') }}">
+    <input type="hidden" id="centerId" value="{{ request.args.get('center_id') }}">
+    <input type="hidden" id="returnUrl" value="{{ request.args.get('return_url', '/') }}">
+
+    <label>Patient Name</label>
+    <div class="input-wrapper">
+      <i class="fa-solid fa-user"></i>
+      <input type="text" id="patientName" required />
+    </div>
+
+    <label>Mobile Number</label>
+    <div class="input-wrapper">
+      <i class="fa-solid fa-phone"></i>
+      <input type="tel" id="patientMobile" required pattern="[0-9]{10}" placeholder="10-digit mobile" />
+    </div>
+
+    <label>Select Date</label>
+    <div class="input-wrapper">
+      <i class="fa-solid fa-calendar"></i>
+      <input type="date" id="appointmentDate" required />
+    </div>
+
+    <label>Select Time</label>
+    <div class="input-wrapper">
+      <i class="fa-solid fa-clock"></i>
+      <input type="time" id="appointmentTime" required />
+    </div>
+
+    <label>Sample Collection</label>
+    <div class="input-wrapper">
+      <i class="fa-solid fa-vial"></i>
+      <select id="sampleType" required>
+        <option value="center">Visit Center</option>
+        <option value="home">Home Sample Collection</option>
+      </select>
+    </div>
+
+    <p id="homeAvailability" class="info"><i class="fa-solid fa-info-circle"></i> Home sample collection available ✅</p>
+
+    <!-- Reminder Feature -->
+    <label>Appointment Reminder</label>
+    <div class="reminder-wrapper">
+      <label><input type="checkbox" id="reminderEnabled" checked> Enable Reminder</label>
+      <span>Minutes before: <input type="number" id="reminderMinutes" value="60" min="5" max="1440"></span>
+    </div>
+
+    <button type="submit" class="submit-btn"><i class="fa-solid fa-check"></i> Confirm Booking</button>
+  </form>
+</div>
+
+<script>
+  // Dynamic back button
+  document.getElementById('backBtn').addEventListener('click', () => {
+    const returnUrl = document.getElementById('returnUrl').value;
+    window.location.href = returnUrl;
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("appointmentForm");
+    const homeAvailability = document.getElementById("homeAvailability");
+
+    // Animate info message based on selection
+    const sampleType = document.getElementById("sampleType");
+    sampleType.addEventListener("change", () => {
+      if(sampleType.value === "home"){
+        homeAvailability.textContent = " Home sample collection available ✅";
+        homeAvailability.classList.add("show");
+      } else {
+        homeAvailability.textContent = " Visit center for sample collection";
+        homeAvailability.classList.add("show");
+      }
+    });
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const payload = {
+        test_id: document.getElementById("testId").value,
+        center_id: document.getElementById("centerId").value,
+        appointment_date: document.getElementById("appointmentDate").value,
+        time_slot: document.getElementById("appointmentTime").value,
+        home_service:
+          document.getElementById("sampleType").value === "home" ? "Yes" : "No",
+        reminder_enabled: document.getElementById("reminderEnabled").checked,
+        reminder_before_minutes: parseInt(document.getElementById("reminderMinutes").value)
+      };
+
+      fetch("/api/book_appointment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          alert(data.message || "Appointment booked successfully ✅");
+          window.location.href = "/?open=dashboard";
+        } else {
+          alert(data.message || "Booking failed ❌");
+        }
+      })
+      .catch(() => alert("Server error ❌"));
+    });
+  });
+</script>
+
+</body>
+</html>

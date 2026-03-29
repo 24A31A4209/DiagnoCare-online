@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiagnoCare - Online Diagnostic Platform</title>
+
+  <link rel="icon" type="image/png"
+        href="{{ url_for('static', filename='images/faviconicon.png') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/faviconicon.png') }}">
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+<header>
+  <div class="logo-container">
+    <img src="{{ url_for('static', filename='images/logo.png') }}"
+         alt="Logo" class="logo">
+  </div>
+
+  <div class="header-content">
+    <h1 class="logo">DiagnoCare</h1>
+    <p class="subtitle">
+      Online Platform for Diagnostic Appointments & Digital Reports
+    </p>
+  </div>
+
+  <!-- ===== TOP HEADER ===== -->
+<div class="top-header">
+  <ul class="header-menu">
+
+    <!-- Login / Register Buttons -->
+    <li id="loginWrapper">
+      <button id="loginBtn" class="btn-login">Login</button>
+    </li>
+    <li id="registerWrapper">
+      <button id="registerBtn" class="btn-login">Register</button>
+    </li>
+    <li id="logoutWrapper" style="display:none;"> <button id="logoutBtn" class="btn-login">Logout</button> </li>
+  </ul>
+</div>
+
+</header>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="main-nav">
+  <ul>
+    <li id="navHomeWrapper"><a href="/" id="navHome">Home</a></li>
+    <li id="navCentersWrapper"><a href="javascript:void(0)" id="navCenters">Centers</a></li>
+    <li id="navDashboardWrapper"><a href="#dashboard" id="navDashboard">Dashboard</a></li>
+    <li id="navReportsWrapper"><a href="#reports" id="navReports">Reports</a></li>
+  </ul>
+</nav>
+
+<!-- ================= GLOBAL SEARCH ================= -->
+<div class="global-search-wrapper" id="globalSearchWrapper">
+  <div class="global-search-bar">
+    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+    <input type="text"
+           id="globalSearchInput"
+           placeholder="Search categories, centres, or tests...">
+    <i class="fa-solid fa-heart-pulse health-icon"></i>
+    <div id="globalSearchResults"></div>
+  </div>
+</div>
+
+<!-- ================= PUBLIC SECTION ================= -->
+<div id="publicSection" style="display:block;">
+  <section class="hero">
+    <h2>Book Appointments & Access Reports Online</h2>
+    <p>Easy, secure, and fast diagnostic services.</p>
+    <button id="publicBookNow">Book Now</button>
+  </section>
+
+  <section class="features">
+    <h2>Our Services</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Diagnostic Centers</h3>
+        <p>Find verified diagnostic centers and book tests.</p>
+      </div>
+      <div class="card">
+        <h3>Digital Reports</h3>
+        <p>Access your reports anytime, anywhere.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= PROTECTED SECTION ================= -->
+<div id="protectedSection" style="display:none;">
+
+  <div id="dashboardContent">
+    <h2 style="text-align:center; margin:40px 0;">
+      Welcome to your Dashboard
+    </h2>
+
+    <div id="myAppointmentsSection"
+         style="max-width:900px; margin:30px auto;">
+      <h3 style="margin-bottom:15px;">My Appointments</h3>
+      
+      <div id="myAppointmentsCards"></div>
+
+      <div id="appointmentDetailsPanel"
+           style="display:none; margin-top:25px; padding:20px;
+           background:#fff; border-radius:8px;
+           box-shadow:0 3px 10px rgba(0,0,0,0.1);">
+      </div>
+    </div>
+  </div>
+
+  <div id="reportsContent" style="display:none; padding:20px;"></div>
+</div>
+
+<!-- ================= CENTRES ================= -->
+<section id="centresSection" style="display:none;">
+  <button id="centresBackBtn" class="back-btn" style="display:none;">
+    ← Back
+  </button>
+  <h2 id="centresTitle"></h2>
+  <div id="centersContainer"></div>
+</section>
+
+<!-- ================= AUTH SIDEBAR ================= -->
+<div id="authSidebar" class="auth-sidebar">
+  <div class="sidebar-content">
+    <span class="close-sidebar">&times;</span>
+
+    <div class="form-toggle">
+      <button id="showLoginSidebar" class="active">Login</button>
+      <button id="showRegisterSidebar">Register</button>
+    </div>
+
+    <form id="loginFormSidebar" class="active-form">
+      <label>Email</label>
+      <input type="email" id="loginEmailSidebar" required>
+
+      <label>Password</label>
+      <input type="password" id="loginPasswordSidebar" required>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <form id="registerFormSidebar">
+      <label>Full Name</label>
+      <input type="text" id="regNameSidebar" required>
+
+      <label>Email</label>
+      <input type="email" id="regEmailSidebar" required>
+
+      <label>Password</label>
+      <input type="password" id="regPasswordSidebar" required>
+
+      <label>Address</label>
+      <input type="text" id="regAddressSidebar">
+
+      <input type="text"
+             id="regPhoneSidebar"
+             placeholder="Phone Number">
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+</div>
+
+<div id="authOverlay"></div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <p>&copy; 2025 DiagnoCare. All rights reserved.</p>
+</footer>
+
+<!-- ================= APPOINTMENT SIDE PANEL ================= -->
+<div id="appointmentSidePanel" class="side-panel">
+  <div class="side-panel-header">
+    <button id="closeSidePanel" class="close-btn">&times;</button>
+    <h3>Appointment Details</h3>
+  </div>
+
+  <div id="sidePanelContent" class="side-panel-content"></div>
+</div>
+
+<div id="sidePanelOverlay" class="side-panel-overlay"></div>
+
+<div id="notificationsContainer"
+     style="position: fixed; top: 10px; right: 10px;
+            width: 300px; z-index: 9999;">
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

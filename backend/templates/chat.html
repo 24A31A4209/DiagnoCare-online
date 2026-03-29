@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DiagnoCare Chatbot</title>
+<style>
+  /* General Body */
+  body {
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Floating Chat Button */
+  #chatButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    z-index: 9999;
+    transition: background-color 0.2s;
+  }
+
+  #chatButton:hover {
+    background-color: #45a049;
+  }
+
+  /* Chat Widget */
+  #chatWidget {
+    position: fixed;
+    bottom: 90px; /* sits above the button and footer */
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none; /* hidden by default */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9998;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Chat Header */
+  #chatHeader {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Chat Messages */
+  #chatMessages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #f7f7f7;
+  }
+
+  /* Input Section */
+  #chatInputContainer {
+    display: flex;
+    border-top: 1px solid #ccc;
+    padding: 5px;
+  }
+
+  #chatInput {
+    flex: 1;
+    padding: 8px 10px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    background: #fff;
+    border: 1px solid #ccc;
+  }
+
+  #chatSendBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    margin-left: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+
+  #chatSendBtn:hover {
+    background-color: #45a049;
+  }
+
+  /* Messages Styles */
+  .message {
+    max-width: 70%;
+    padding: 8px 12px;
+    border-radius: 15px;
+    word-wrap: break-word;
+  }
+
+  .user {
+    background-color: #0084ff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+  }
+
+  .bot {
+    background-color: #e5e5ea;
+    color: #333;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Footer (example if you have one) */
+  footer {
+    background-color: #5dc5ee;
+    padding: 20px;
+    text-align: center;
+    color: #fff;
+    margin-top: 50px;
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Chat Button -->
+<div id="chatButton">💬</div>
+
+<!-- Chat Widget -->
+<div id="chatWidget">
+  <div id="chatHeader">DiagnoCare Assistant</div>
+  <div id="chatMessages"></div>
+  <div id="chatInputContainer">
+    <input type="text" id="chatInput" placeholder="Type your message">
+    <button id="chatSendBtn">Send</button>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  &copy; 2026 DiagnoCare. All rights reserved.
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const chatButton = document.getElementById("chatButton");
+  const chatWidget = document.getElementById("chatWidget");
+  const chatMessages = document.getElementById("chatMessages");
+  const chatInput = document.getElementById("chatInput");
+  const chatSendBtn = document.getElementById("chatSendBtn");
+
+  // Toggle chat widget
+  chatButton.addEventListener("click", () => {
+    chatWidget.style.display = chatWidget.style.display === "flex" ? "none" : "flex";
+  });
+
+  // Press Enter to send
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") chatSendBtn.click();
+  });
+
+  // Append message
+  function appendMessage(sender, text) {
+    const div = document.createElement("div");
+    div.className = `message ${sender}`;
+    div.textContent = text;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Send message to Flask
+  chatSendBtn.onclick = async () => {
+    const message = chatInput.value.trim();
+    if (!message) return;
+    appendMessage("user", message);
+    chatInput.value = "";
+
+    try {
+      const res = await fetch("/api/gemini-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
+      });
+
+      if (!res.ok) throw new Error("Network response was not ok");
+      const data = await res.json();
+      appendMessage("bot", data.reply);
+    } catch (err) {
+      appendMessage("bot", "Sorry, there was an error. Please try again.");
+      console.error(err);
+    }
+  };
+});
+</script>
+
+</body>
+</html>

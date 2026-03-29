@@ -1,0 +1,896 @@
+/* Reset & Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f7faff;
+  color: #333;
+}
+
+/* Header */
+header {
+  background-color: #0b9abe;
+  text-align: center;
+  padding: 30px 0;
+  position: relative;
+}
+
+.header-content {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.top-header {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.header-links{
+  display: right;
+  gap: 15px;
+}
+
+
+.btn-login {
+  background-color: #fff;
+  color: #3811a4;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #e0f7ff;
+}
+
+.logo-container {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+}
+
+.logo-container img {
+  width: auto;
+  max-width: calc(100% - 10px);
+  height: auto;
+  max-height: calc(100% - 0px);
+  display: block;
+}
+
+/* Navigation */
+.main-nav {
+  background-color: #84e9f2;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: inline-flex;
+  gap: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.main-nav ul li {
+  display: inline-block; /* allow JS to hide/show the li */
+}
+
+.main-nav ul li a {
+  text-decoration: none;
+  color: #3811a4;
+  font-weight: 500;
+  transition: 0.3s;
+  display: block; /* fill the li */
+}
+
+.main-nav ul li a:hover {
+  color: #48a2c6;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/*  ==================== Home page sections ==================== */
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #0077b6;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.hero button {
+  padding: 10px 25px;
+  font-size: 1rem;
+  background-color: #87ceeb;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.hero button:hover {
+  background-color: #00aaff;
+}
+
+/* Features Section */
+.features {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.features h2 {
+  margin-bottom: 40px;
+  color: #0077b6;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+  margin-bottom: 15px;
+  color: #0077b6;
+}
+
+/* Login / Register Modal */
+/* Centered Login/Register Modal */
+#authSidebar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* centers it */
+  width: 420px;
+  max-width: 95%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  padding: 25px 30px;
+  z-index: 1000;
+  display: none; /* hidden by default */
+  flex-direction: column;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#authSidebar.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Overlay background */
+#authOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.55);
+  display: none;
+  z-index: 999;
+}
+
+#authOverlay.active {
+  display: block;
+}
+
+/* Close button inside modal */
+#authSidebar .close-sidebar {
+  align-self: flex-end;
+  font-size: 28px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Toggle buttons (Login / Register) */
+.form-toggle {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.form-toggle button {
+  flex: 1;
+  padding: 12px 0;
+  margin: 0 5px;
+  cursor: pointer;
+  background: #f0f0f0;
+  border: none;
+  font-weight: bold;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-toggle button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+/* Form inputs */
+form input {
+  margin-bottom: 15px;
+  padding: 12px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Form buttons */
+form button[type="submit"] {
+  padding: 12px 0;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Form visibility */
+form {
+  display: none;
+  flex-direction: column;
+}
+
+form.active-form {
+  display: flex;
+}
+
+
+
+/* Protected Section */
+#protectedSection {
+  display: none;
+}
+
+
+
+/* ============================= */
+/* Centres / Categories / Tests */
+/* ============================= */
+
+/* Grid container */
+#centersContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+/* Card base with soft gradient */
+.info-card {
+  background: linear-gradient(145deg, #f5f8ff, #dce6ff); /* soft pastel blue */
+  border-radius: 16px;
+  padding: 22px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  opacity: 0; 
+  transform: translateY(20px); 
+  position: relative;
+  overflow: hidden;
+}
+
+/* Fade-in / slide animation helper */
+.info-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover effects with gradient shift and shadow */
+.info-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  background: linear-gradient(145deg, #cce0ff, #a8caff); /* brighter blue on hover */
+  background-size: 200% 200%;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Animated gradient shift */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Icon styling with floating animation */
+.info-card .icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Icon hover animation */
+.info-card:hover .icon {
+  transform: rotate(-15deg) scale(1.3);
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+}
+
+/* Card heading */
+.info-card h3 {
+  color: #0077b6;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Heading hover */
+.info-card:hover h3 {
+  color: #0096c7;
+  transform: translateY(-2px);
+}
+
+/* Paragraph styling */
+.info-card p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+/* Book button inside test cards */
+.book-btn {
+  margin-top: 10px;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.book-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  background: linear-gradient(90deg, #ff7a80, #ffd48f);
+}
+
+/* Back button */
+.back-btn {
+  margin: 20px;
+  padding: 10px 18px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  #centersContainer {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 20px;
+  }
+
+  .info-card {
+    padding: 18px;
+  }
+
+  .info-card .icon {
+    font-size: 42px;
+  }
+}
+
+/* Floating animation for icons */
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-6px) rotate(-2deg); }
+  50% { transform: translateY(0px) rotate(0deg); }
+  75% { transform: translateY(-4px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+
+/* Appointment Booking Card */
+.appointment-card {
+  max-width: 420px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.appointment-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #0077b6;
+}
+
+#appointmentForm label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+#appointmentForm input,
+#appointmentForm select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.book-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.book-btn:hover {
+  background: #0056b3;
+}
+
+.info-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #444;
+}
+
+
+/*=========== Appointment cards ==========*/
+
+/* Grid Layout */
+#myAppointmentsCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 22px;
+}
+
+/* Card Base */
+.appointment-summary-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Hover */
+.appointment-summary-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(13, 110, 253, 0.25);
+}
+
+/* Top Gradient Bar */
+.appointment-header {
+  background: linear-gradient(135deg, #0d6efd, #4facfe);
+  padding: 14px 18px;
+  color: white;
+}
+
+/* Test Name */
+.appointment-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Status Badge */
+.status-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: #28a745;
+  color: white;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 14px;
+  font-weight: 600;
+}
+
+/* Card Body */
+.appointment-body {
+  padding: 16px 18px;
+}
+
+.appointment-body p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Appointment card icons (colorful) */
+.icon-date { color: #0d6efd; }        /* blue */
+.icon-time { color: #198754; }        /* green */
+.icon-reminder { color: #ffc107; }    /* yellow */
+.icon-centre { color: #fd7e14; }      /* orange */
+.icon-address { color: #20c997; }     /* teal */
+.icon-status { color: #6610f2; }      /* indigo */
+.icon-home { color: #dc3545; }        /* red */
+
+/* ✅ Font Awesome Icons FIX */
+.appointment-body i {
+  font-size: 16px;
+  min-width: 18px;
+}
+
+/* Footer Hint */
+.appointment-footer {
+  padding: 10px 18px;
+  background: #f8f9fa;
+  font-size: 13px;
+  color: #6c757d;
+  text-align: right;
+}
+
+/* ================= Appointment Side Panel ================= */
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 400px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.25);
+  border-radius: 12px 0 0 12px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* Panel Open State */
+.side-panel.open {
+  right: 0;
+}
+
+/* ================= Header ================= */
+.side-panel-header {
+  position: relative;
+  padding: 16px 20px;
+  background: linear-gradient(120deg, #4facfe, #00f2fe);
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.side-panel-header:hover {
+  background: linear-gradient(120deg, #00f2fe, #4facfe);
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  font-weight: 700;
+  background: rgba(255,255,255,0.2);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  transform: translateY(-50%) rotate(90deg) scale(1.2);
+  background: rgba(255,255,255,0.35);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ================= Content Area ================= */
+.side-panel-content {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+  background: #f7f9fc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.side-panel-content h4 {
+  margin: 0;
+  padding-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.side-panel-content p {
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.side-panel-content hr {
+  margin: 12px 0;
+  border: 0.5px solid #ddd;
+}
+
+/* ================= Side Panel Icons (colorful) */
+.side-panel-content i {
+  font-size: 16px;
+  min-width: 20px;
+}
+
+.side-icon-test { color: #6f42c1; }       /* purple */
+.side-icon-centre { color: #fd7e14; }     /* orange */
+.side-icon-address { color: #20c997; }    /* teal */
+.side-icon-date { color: #0dcaf0; }       /* cyan */
+.side-icon-time { color: #fd7e14; }       /* orange */
+.side-icon-status { color: #6610f2; }     /* indigo */
+.side-icon-home { color: #dc3545; }       /* red */
+
+/* ================= Status Badge ================= */
+.side-panel-content .status-badge {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+.side-panel-content .status-badge.confirmed {
+  background: #e6f7ec;
+  color: #198754;
+}
+
+.side-panel-content .status-badge.cancelled {
+  background: #fdecea;
+  color: #dc3545;
+}
+
+/* ================= Buttons ================= */
+.side-panel-content button {
+  background: linear-gradient(90deg, #ff5f6d, #ffc371);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.side-panel-content button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.cancel-btn {
+  background: #dc3545;
+}
+
+.cancel-btn:hover {
+  background: #bb2d3b;
+}
+
+/* ================= Overlay ================= */
+.side-panel-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  z-index: 1500;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.side-panel-overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+/* ================= Mobile ================= */
+@media (max-width: 600px) {
+  .side-panel {
+    width: 100%;
+    right: -100%;
+    border-radius: 0;
+  }
+}
+
+/* Slide & fade-in animation for panel content */
+@keyframes slideFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animation to panel content when updated */
+.side-panel-content.animate {
+  animation: slideFadeIn 0.35s ease forwards;
+}
+
+
+/* ================= Global Search bar ================= */
+
+.global-search-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px; /* small gap below navbar */
+  position: relative;
+  z-index: 50;
+}
+
+.global-search-bar {
+  display: flex;
+  align-items: center;
+  width: 520px;
+  max-width: 90%;
+  padding: 14px 18px;
+  border-radius: 50px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.global-search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 0 12px;
+  background: transparent;
+}
+
+.search-icon { color: #666; font-size: 18px; }
+.health-icon { color: #e63946; font-size: 20px; margin-left: 8px; cursor: pointer; }
+
+#globalSearchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 400px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  z-index: 1000;
+  margin-top: 6px;
+  display: none;
+  padding: 10px;
+}
+
+.search-card {
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.2s;
+  background: #fafafa;
+}
+
+.search-card:hover { background: #f0f0f0; }
+.search-card .icon { margin-right: 10px; color: #666; min-width: 20px; text-align: center; }
+.search-card mark { background: #ffe58a; color: #000; }
+.no-results { text-align: center; color: #999; padding: 12px; }
+
+/* ================== Floating Notifiacations Panel ================== */
+.notifications-wrapper {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 300px;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  background: #fff;
+  border-left: 4px solid #4caf50;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 5px;
+  opacity: 1;
+  transition: opacity 0.5s;
+}
+
+.notification.unread {
+  border-left-color: #f44336; /* unread = red */
+}
+
+
+
+/* Footer */
+footer {
+  background-color: #5dc5ee;
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+  margin-top: 50px;
+  z-index: 1;
+}
